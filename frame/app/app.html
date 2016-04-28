@@ -7,7 +7,7 @@
             <span class="icon-bar"></span>
         </button>
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">{{keyword2}}项目前端管理--angularJS+ui-route+oclazyload</a>
+            <a class="navbar-brand" href="#">项目前端管理--angularJS+ui-route+oclazyload</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -16,7 +16,7 @@
             <form class="navbar-form navbar-right" style="position: relative;">
                 <input type="text" ng-model="keyword2" class="form-control" placeholder="Search..." style="width: 300px;">
                 <div class="list-group" ng-if="keyword2" style="position: absolute;width: 300px;">
-                    <a  ng-repeat="r in  route_url" ng-click="itemClick();"  ng-href="{{$state.href(r.state)}}" class="list-group-item">{{r.controller}}</a>
+                    <a  ng-repeat="r in  route_url | filter:{controller:keyword2}" ng-click="itemClick();"  ng-href="{{$state.href(r.state)}}" class="list-group-item">{{r.controller}}</a>
                   </a>
                 </div>
             </form>

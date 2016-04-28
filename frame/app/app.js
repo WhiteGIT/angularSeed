@@ -5,7 +5,7 @@ var app = angular.module('seed',[
         'angular-loading-bar',
         "oc.lazyLoad"
     ]);
-app.constant("route_url",[
+app.constant("route_url",[   //左边菜单
     {   state:'app.http',
         url:'/http',
         templateUrl:'modules/publicMethod/index.html',
