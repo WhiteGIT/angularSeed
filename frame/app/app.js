@@ -23,7 +23,7 @@ app.constant("route_url",[   //左边菜单
         templateUrl:'modules/uigrid/index.html',
         file:'modules/uigrid/app.js',    //依赖文件 可以单个路径，或者数组，或者定义好的字符串变量
         controller:'uigrid'
-    },
+    }
 ])
 app.run( ['$rootScope', '$state', '$stateParams','cfpLoadingBar','util','route_url','$timeout',
     function ($rootScope, $state, $stateParams, cfpLoadingBar,util,route_url,$timeout) {
