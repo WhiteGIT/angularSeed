@@ -1,0 +1,26 @@
+/*
+ * Sidebar �����
+ */
+.sidebar{
+    width: 220px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    overflow:auto;
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+    padding-top: 50px;
+}
+.sidebar .glyphicon{
+    padding-right: 5px;
+}
+
+.nav-sidebar ul{
+    padding-left: 10px;
+    display: none;
+}
+
+section #main.ng-enter,section #main.ng-leave{
+    overflow: hidden;
+}

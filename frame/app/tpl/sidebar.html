@@ -1,0 +1,11 @@
+<script type="text/ng-template" id="sidebar-renderer.html">
+    <a  ng-href="{{$state.href(item.url, item.params)}}" href="#"><em ng-if="item.icon"  class="glyphicon glyphicon-folder-close" title="{{item.text}}"></em>{{item.text}}</a>
+    <ul ng-if="item.submenu"  class="nav nav-sidebar-item">
+       <li ng-repeat="item in item.submenu"   ng-include="'sidebar-renderer.html'" ng-click="sidetoggle()" ></li>
+    </ul>
+</script>
+<div sidebar class="sidebar">
+    <ul class="nav nav-sidebar">
+        <li ng-repeat="item in menuItems" ng-click="sidetoggle()"  ng-include="'sidebar-renderer.html'"></li>
+    </ul>
+</div>
