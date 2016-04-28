@@ -24,3 +24,6 @@
 section #main.ng-enter,section #main.ng-leave{
     overflow: hidden;
 }
+#loading-bar .bar,#loading-bar .peg{
+    height: 4px!important;
+}

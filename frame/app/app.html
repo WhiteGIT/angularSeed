@@ -7,16 +7,27 @@
             <span class="icon-bar"></span>
         </button>
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">项目前端管理--angularJS+ui-route</a>
+            <a class="navbar-brand" href="#">{{keyword2}}项目前端管理--angularJS+ui-route+oclazyload</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">LIN</a></li>
             </ul>
+            <form class="navbar-form navbar-right" style="position: relative;">
+                <input type="text" ng-model="keyword2" class="form-control" placeholder="Search..." style="width: 300px;">
+                <div class="list-group" ng-if="keyword2" style="position: absolute;width: 300px;">
+                    <a  ng-repeat="r in  route_url" ng-click="itemClick();"  ng-href="{{$state.href(r.state)}}" class="list-group-item">{{r.controller}}</a>
+                  </a>
+                </div>
+            </form>
         </div>
     </div>
 </nav>
 <aside ng-include="'frame/app/tpl/sidebar.html'"></aside>
 <section  id="loading-bar-container" style="position: relative; margin-top: 50px; margin-left: 220px;" >
+    <div class="container" ng-if="msg.length>0" style="position: fixed; right: 0; bottom:0px; background:rgba(192, 152, 83, 0.56);width: 400px; height: 150px; overflow-y:auto;z-index: 9999;">
+       <h4>第一次进入本模块，懒加载依赖</h4>
+        <span ng-repeat="r in msg track by $index" style="display: block;">{{r}}</span>
+    </div>
     <div ui-view  class="main am-fade-and-slide-right"></div>
 </section>

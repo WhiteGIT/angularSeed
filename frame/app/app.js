@@ -2,15 +2,37 @@
 var app = angular.module('seed',[
         'ui.router',
         'ngAnimate',
-        'angular-loading-bar'
+        'angular-loading-bar',
+        "oc.lazyLoad"
     ]);
-
-app.run( ['$rootScope', '$state', '$stateParams','cfpLoadingBar',
-    function ($rootScope, $state, $stateParams, cfpLoadingBar) {
+app.constant("route_url",[
+    {   state:'app.http',
+        url:'/http',
+        templateUrl:'modules/publicMethod/index.html',
+        file:'modules/publicMethod/app.js',    //依赖文件 可以单个路径，或者数组，或者定义好的字符串变量
+        controller:'publicMethod'
+    },
+    {   state:'app.oclazyload',
+        url:'/oclazyload',
+        templateUrl:'modules/oclazyload/index.html',
+        file:'modules/oclazyload/app.js',    //依赖文件 可以单个路径，或者数组，或者定义好的字符串变量
+        controller:'oclazyload'
+    },
+    {   state:'app.uigrid',
+        url:'/uigrid',
+        templateUrl:'modules/uigrid/index.html',
+        file:'modules/uigrid/app.js',    //依赖文件 可以单个路径，或者数组，或者定义好的字符串变量
+        controller:'uigrid'
+    },
+])
+app.run( ['$rootScope', '$state', '$stateParams','cfpLoadingBar','util','route_url','$timeout',
+    function ($rootScope, $state, $stateParams, cfpLoadingBar,util,route_url,$timeout) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
-
+    $rootScope.route_url=route_url;
+    $rootScope.msg=[];
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+        $rootScope.msg=[];
             if (typeof(toState) !== 'undefined'){
                 cfpLoadingBar.start();
                console.log(toState);
@@ -25,112 +47,76 @@ app.run( ['$rootScope', '$state', '$stateParams','cfpLoadingBar',
                 cfpLoadingBar.complete();
             });
         });
-    $rootScope.menuItems=[
-        {
-            'text':'公用方法',
-            'icon':true,
-            'url':'#',
-            'submenu':[
-                {
-                    'text':'请求',
-                    'url':'app.http'
-                }
-            ]
-        },
-        {
-            'text':'插件管理',
-            'icon':true,
-            'url':'#',
-            'submenu':[
-                {
-                    'text':'angular-strap',
-                    'icon':true,
-                    'url':'#',
-                    'submenu':[
-                        {
-                            'text':'Modals',
-                            'url':'app.list1',
-                        }
-                    ]
-                },
-                {
-                    'text':'其他插件',
-                    'icon':true,
-                    'url':'#'
-                }
-            ]
-        },
-        {
-            'text':'样式模板',
-            'icon':true,
-            'url':'#',
-            'submenu':[
-                {
-                    'text':'表单样式',
-                    'url':'app.list',
-                }
-            ]
-        }
-    ]
+        $rootScope.$on('ocLazyLoad.componentLoaded', function(e, module) {
+
+            //if($rootScope.msg.length>5){
+            //    $rootScope.msg.shift();
+            //}
+            $timeout(function(){
+                $rootScope.msg.push('loaded:['+module+']');
+            })
+
+
+        });
+
+           util.http("my.json").success(function(res){
+            $rootScope.menuItems=res.menu;
+        })
+
 }])
 //全局变量
 app.constant('test_data',
     {
         test:'HELLO WORLD'
     })
-//路由配置
-app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',function($stateProvider, $urlRouterProvider, $locationProvider){
+//路由配置  oclazyload配置
+app.config(['$stateProvider', '$urlRouterProvider','$locationProvider','$ocLazyLoadProvider','route_url',function($stateProvider, $urlRouterProvider, $locationProvider,$ocLazyLoadProvider,route_url){
     //$locationProvider.html5Mode(false);
 
+    $ocLazyLoadProvider.config({
+         debug: true,  //打印加载的lazy模块
+           events: true, //广播事件
+        // modules: [{  //设置路径别名
+        //    name: 'gridModule',
+        //    files: [
+        //       'js/gridModule.js'
+        //    ]
+       // }]
+    });
+
+
+
    $urlRouterProvider.otherwise('/app');
-    var url=[
-        {   state:'app.http',
-            url:'/http',
-            templateUrl:'frame/app/tpl/common/http.html',
-            controller:'common_http'
-        },
-        {   state:'app',
-            url:'/app',
-            templateUrl:'frame/app/app.html'
-        },
-        {   state:'app.list',
-            url:'/list',
-            templateUrl:'frame/app/tpl/First.html'
-        },
-        {   state:'app.list1',
-            url:'/list1',
-            templateUrl:'frame/app/tpl/Second.html'
-        }
-    ]
     //路由
-    angular.forEach(url,function(v){
+    angular.forEach(route_url,function(v){
         $stateProvider
             .state(v.state,{
                 url: v.url,
-                template: v.template,
-                templateUrl: v.templateUrl,
-                controller : v.controller
-            })
-    })
-  /*  $stateProvider
-        .state('template',{
-            url:'/template',
-            template: '<h1>Welcome to your inbox</h1>'
-        })
-        .state('app',{
-            url:'/app',
-            templateUrl:'frame/app/app.html'
-        })
-        .state('app.list',{
-            url:'/list',
-            templateUrl:'frame/app/tpl/First.html'
-        })
-        .state('app.list1',{
-            url:'/list1',
-            templateUrl:'frame/app/tpl/Second.html'
-        })*/
 
-}]);
+                        controller: v.controller, // This view will use AppCtrl loaded below in the resolve
+                        templateUrl: v.templateUrl,
+                resolve: { // Any property in resolve should return a promise and is executed before the view is loaded
+                    loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+                        return $ocLazyLoad.load(v.file);
+                    }]
+                }
+            })
+         })
+    $stateProvider.state('app',{
+            url:'/app',
+            templateUrl:'frame/app/app.html',
+            controller : function($scope){
+                $scope.$watch('keyword2',function(w,old){
+                    console.log(w);
+                    console.log(old);
+                })
+
+                $scope.itemClick=function(){
+                    $scope.keyword2="";
+                }
+            }
+        })
+   }]);
 //进度条配置
 app.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.parentSelector = '#loading-bar-container';
@@ -163,6 +149,7 @@ app.factory("util",['$http','cfpLoadingBar',function($http,cfpLoadingBar){
         console.info("into http...");
         var req={
             method: 'POST',
+            timeout:60000,
             url: url,
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
@@ -179,33 +166,10 @@ app.factory("util",['$http','cfpLoadingBar',function($http,cfpLoadingBar){
            cfpLoadingBar.complete();
         });
     }
-    return {
+    return  {
         http : http
     }
 
-}])
-app.controller("common_http",['util','$interval','$scope',function(util,$interval,$scope){
-    $scope.hInfo={};
-    $scope.httpTest = function(){
-        var begin=new Date().getTime();
-
-       if(typeof minterval != 'undefined') return;
-
-       minterval =  $interval(function(){
-           $scope.hInfo.begin=(new Date().getTime()-begin)/100 +"毫秒";
-        },10)
-        var op={
-            method:'GET'
-        }
-        util.http("my.json",op).error(function(res){
-            console.log("after erro");
-            $scope.hInfo.res=res;
-            $interval.cancel(minterval);
-        }).success(function(res){
-            $scope.hInfo.res=res;
-            $interval.cancel(minterval);
-        })
-    }
 }])
 //animation
 app.animation('.main', function ($timeout) {
@@ -224,4 +188,8 @@ app.animation('.main', function ($timeout) {
         }
 
     };
+});
+
+app.controller("MyCtrl", function($ocLazyLoad,loadMyCtrl) {
+    $ocLazyLoad.load('frame/app/js/test.js');
 });

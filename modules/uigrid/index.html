@@ -1,0 +1,29 @@
+<div class="container">
+    <h3>
+      最简洁使用
+    </h3>
+    <pre>
+        引入文件：'bower_components/angular-ui-grid/ui-grid.js',
+                 'bower_components/angular-ui-grid/ui-grid.css
+        js:  $scope.myData = [{name: "Moroni", age: 50},
+                                {name: "Teancum", age: 43},
+                                {name: "Jacob", age: 27},
+                                {name: "Nephi", age: 29},
+                                {name: "Enos", age: 34}];
+              $scope.gridOptions = {
+                        columnDefs: [ //不配置的话 默认用字段名，如右边
+                            {
+                               name:'姓名',field:'name'
+                            },
+                             {
+                               name:'年龄',field:'age'
+                            }],
+                        data: 'myData'};
+        HTML： < div ui-grid="gridOptions" style="height: 200px;">< / div>
+    </pre>
+    结果：<Br>
+    <div ui-grid="gridOptions" style="height: 200px;display: inline-block; width: 40%"></div>
+    <div ui-grid="gridOptions2" style="height: 200px;display: inline-block; width: 40%"></div>
+</div>
+
+

@@ -1,0 +1,121 @@
+<div class="container">
+<h1>oclazyload</h1>
+<h3>Configuration</h3>
+<pre>
+        $ocLazyLoadProvider.config({
+         debug: true,  //打印加载的lazy模块
+         events: true, //广播事件  ocLazyLoad.moduleLoaded, ocLazyLoad.moduleReloaded, ocLazyLoad.componentLoaded, ocLazyLoad.fileLoaded.
+         modules: [{  //设置路径别名
+            name: 'gridModule',
+            files: [
+               'js/gridModule.js'
+            ]
+        }]
+    });
+    //if events true
+    $scope.$on('ocLazyLoad.moduleLoaded', function(e, module) {
+      console.log('module loaded', module);
+    });
+</pre>
+<h3>Directive</h3>
+<pre>
+    < div o c-lazy-load="['js/testModule.js', 'partials/lazyLoadTemplate.html']">
+        <!-- Use a directive from TestModule -->
+        <test-directive></test-directive>
+    < /div>
+</pre>
+<h3>service</h3>
+<pre>
+    $ocLazyLoad.load([
+       'testModule.js',
+       {type: 'css', path: 'testModuleCtrl'},
+       {type: 'html', path: 'testModuleCtrl.html'},
+       {type: 'js', path: 'testModuleCtrl'},
+       'js!testModuleService',
+       'less!testModuleLessFile'
+    ]);
+</pre>
+<pre>
+    $ocLazyLoad.load([{
+      files: ['testModule.js', 'bower_components/bootstrap/dist/js/bootstrap.js'],
+      cache: false
+    },{
+      files: ['anotherModule.js'],
+      cache: true
+    }]);
+</pre>
+<pre>
+    $ocLazyLoad.load(
+      ['partials/template1.html', 'partials/template2.html'],
+      {cache: false, timeout: 5000}
+    );
+</pre>
+<h3>DEMO</h3>
+<pre>
+    $stateProvider.state('index', {
+      url: "/", // root route
+      views: {
+        "lazyLoadView": {
+          controller: 'AppCtrl', // This view will use AppCtrl loaded below in the resolve
+          templateUrl: 'partials/main.html'
+        }
+      },
+      resolve: { // Any property in resolve should return a promise and is executed before the view is loaded
+        loadMyCtrl: ['$ocLazyLoad', function($ocLazyLoad) {
+          // you can lazy load files for an existing module
+                 return $ocLazyLoad.load('js/AppCtrl.js');
+        }]
+      }
+    });
+    AppCtrl.js
+    angular.module('seed'//最外层APP).controller("publicMethod",['$scope',function($scope){
+        do something...
+    }
+}])
+</pre>
+<pre>
+    $stateProvider.state('parent', {
+      url: "/",
+      resolve: {
+        loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
+                 return $ocLazyLoad.load('js/ServiceTest.js');
+        }]
+      }
+    })
+    .state('parent.child', {
+        resolve: {
+            test: ['loadMyService', '$ServiceTest', function(loadMyService, $ServiceTest) {
+                // you can use your service
+                $ServiceTest.doSomething();
+            }]
+        }
+    });
+</pre>
+<pre>
+    $stateProvider.state('index', {
+      url: "/",
+      resolve: {
+        loadMyService: ['$ocLazyLoad', function($ocLazyLoad) {
+                 return $ocLazyLoad.load('js/ServiceTest.js');
+        }],
+            test: ['loadMyService', '$serviceTest', function(loadMyService, $serviceTest) {
+                // you can use your service
+                $serviceTest.doSomething();
+            }]
+        }
+    });
+</pre>
+<pre>
+    $stateProvider.state('index', {
+    url: "/",
+      resolve: {
+        loadMyService: ['$ocLazyLoad', '$injector', function($ocLazyLoad, $injector) {
+          return $ocLazyLoad.load('js/ServiceTest.js').then(function() {
+            var $serviceTest = $injector.get("$serviceTest");
+            $serviceTest.doSomething();
+          });
+        }]
+      }
+    });
+</pre>
+</div>
