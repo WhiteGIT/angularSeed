@@ -27,18 +27,7 @@ app.run( ['$rootScope', '$state', '$stateParams','cfpLoadingBar',
         });
     $rootScope.menuItems=[
         {
-            'text':'公用方法',
-            'icon':true,
-            'url':'#',
-            'submenu':[
-                {
-                    'text':'请求',
-                    'url':'app.http'
-                }
-            ]
-        },
-        {
-            'text':'插件管理',
+            'text':'测试目录',
             'icon':true,
             'url':'#',
             'submenu':[
@@ -48,8 +37,8 @@ app.run( ['$rootScope', '$state', '$stateParams','cfpLoadingBar',
                     'url':'#',
                     'submenu':[
                         {
-                            'text':'Modals',
-                            'url':'app.list1',
+                            'text':'demo',
+                            'url':'app.demo',
                         }
                     ]
                 },
@@ -57,17 +46,6 @@ app.run( ['$rootScope', '$state', '$stateParams','cfpLoadingBar',
                     'text':'其他插件',
                     'icon':true,
                     'url':'#'
-                }
-            ]
-        },
-        {
-            'text':'样式模板',
-            'icon':true,
-            'url':'#',
-            'submenu':[
-                {
-                    'text':'表单样式',
-                    'url':'app.list',
                 }
             ]
         }
@@ -84,22 +62,13 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',function(
 
    $urlRouterProvider.otherwise('/app');
     var url=[
-        {   state:'app.http',
-            url:'/http',
-            templateUrl:'frame/app/tpl/common/http.html',
-            controller:'common_http'
-        },
         {   state:'app',
             url:'/app',
             templateUrl:'frame/app/app.html'
         },
-        {   state:'app.list',
-            url:'/list',
-            templateUrl:'frame/app/tpl/First.html'
-        },
-        {   state:'app.list1',
-            url:'/list1',
-            templateUrl:'frame/app/tpl/Second.html'
+        {   state:'app.demo',
+            url:'/demo',
+            templateUrl:'Models/demo/index.html'
         }
     ]
     //路由
@@ -112,24 +81,6 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider',function(
                 controller : v.controller
             })
     })
-  /*  $stateProvider
-        .state('template',{
-            url:'/template',
-            template: '<h1>Welcome to your inbox</h1>'
-        })
-        .state('app',{
-            url:'/app',
-            templateUrl:'frame/app/app.html'
-        })
-        .state('app.list',{
-            url:'/list',
-            templateUrl:'frame/app/tpl/First.html'
-        })
-        .state('app.list1',{
-            url:'/list1',
-            templateUrl:'frame/app/tpl/Second.html'
-        })*/
-
 }]);
 //进度条配置
 app.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
