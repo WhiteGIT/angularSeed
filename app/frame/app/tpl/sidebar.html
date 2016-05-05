@@ -2,11 +2,11 @@
     <a  ng-href="{{$state.href(item.url)}}" href="#">
         <em  class="glyphicon" ng-class="{'glyphicon-folder-close':item.icon,'glyphicon-file':!item.icon}" title="{{item.text}}"></em>{{item.text}}</a>
     <ul ng-if="item.submenu"  class="nav nav-sidebar-item">
-       <li ng-repeat="item in item.submenu"   ng-include="'sidebar-renderer.html'" ng-click="sidetoggle()" ></li>
+       <li ng-repeat="item in item.submenu"   ui-sref-active="active"  ng-include="'sidebar-renderer.html'" ng-click="sidetoggle()" ></li>
     </ul>
 </script>
 <div sidebar class="sidebar">
     <ul class="nav nav-sidebar">
-        <li ng-repeat="item in menuItems" ng-click="sidetoggle()"  ng-include="'sidebar-renderer.html'"></li>
+        <li ng-repeat="item in menuItems" ui-sref-active="active" ng-click="sidetoggle()"  ng-include="'sidebar-renderer.html'"></li>
     </ul>
 </div>

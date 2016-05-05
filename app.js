@@ -8,8 +8,10 @@ var fs =require('fs');
 var express =require('express');
 var app= express();
 
+//托管的静态文件
 app.use(express.static(path.join(__dirname, 'app')));
 
+//端口
 app.set('port', process.env.PORT || 3000);
 
 
@@ -20,8 +22,8 @@ app.get('/', function(req, res) {
 });
 
 app.get('/getMenu', function(req, res) {
-    console.log("getMenu...")
     var data = JSON.parse(fs.readFileSync('my.json'));
+    console.log("getMenu success")
     res.json(data);
 });
 

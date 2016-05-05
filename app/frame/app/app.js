@@ -35,7 +35,8 @@ app.run( ['$rootScope', '$state', '$stateParams','cfpLoadingBar','util','route_u
         $rootScope.msg=[];
             if (typeof(toState) !== 'undefined'){
                 cfpLoadingBar.start();
-               console.log(toState);
+                console.log("old state:"+$state.$current.name)
+                console.log(toState);
                /*登录校验
                 if(!session){
                     $rootScope.$state.go('login')
@@ -47,19 +48,16 @@ app.run( ['$rootScope', '$state', '$stateParams','cfpLoadingBar','util','route_u
                 cfpLoadingBar.complete();
             });
         });
-        $rootScope.$on('ocLazyLoad.componentLoaded', function(e, module) {
 
-            //if($rootScope.msg.length>5){
-            //    $rootScope.msg.shift();
-            //}
+     $rootScope.$on('ocLazyLoad.componentLoaded', function(e, module) {
+
             $timeout(function(){
                 $rootScope.msg.push('loaded:['+module+']');
             })
 
-
         });
 
-           util.http("getMenu",{'method':'GET'}).success(function(res){
+     util.http("getMenu",{'method':'GET'}).success(function(res){
             $rootScope.menuItems=res.menu;
         })
 
@@ -83,8 +81,6 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider','$ocLazyL
         //    ]
        // }]
     });
-
-
 
    $urlRouterProvider.otherwise('/app');
     //路由
@@ -190,6 +186,3 @@ app.animation('.main', function ($timeout) {
     };
 });
 
-app.controller("MyCtrl", function($ocLazyLoad,loadMyCtrl) {
-    $ocLazyLoad.load('frame/app/js/test.js');
-});
