@@ -27,3 +27,7 @@ section #main.ng-enter,section #main.ng-leave{
 #loading-bar .bar,#loading-bar .peg{
     height: 4px!important;
 }
+/*common*/
+.container{
+    width: auto !important;
+}

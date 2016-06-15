@@ -1,0 +1,13 @@
+{
+  "topbar": {
+    "name": "项目前端管理",
+    "Lange": "english"
+  },
+  "nav": {
+    "menu": {
+      "GYFF": "公用方法",
+      "CJGL": "插件管理",
+      "YSMB": "样式模板"
+    }
+  }
+}

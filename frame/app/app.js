@@ -3,7 +3,8 @@ var app = angular.module('seed',[
         'ui.router',
         'ngAnimate',
         'angular-loading-bar',
-        "oc.lazyLoad"
+        'oc.lazyLoad',
+        'pascalprecht.translate'
     ]);
 app.constant("route_url",[   //左边菜单
     {   state:'app.http',
@@ -25,12 +26,23 @@ app.constant("route_url",[   //左边菜单
         controller:'uigrid'
     }
 ])
-app.run( ['$rootScope', '$state', '$stateParams','cfpLoadingBar','util','route_url','$timeout',
-    function ($rootScope, $state, $stateParams, cfpLoadingBar,util,route_url,$timeout) {
+app.run( ['$rootScope', '$state', '$stateParams','cfpLoadingBar','util','route_url','$timeout','$translate',
+    function ($rootScope, $state, $stateParams, cfpLoadingBar,util,route_url,$timeout,$translate) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
     $rootScope.route_url=route_url;
     $rootScope.msg=[];
+        //语言切换
+        $rootScope.langKey='zn';
+        $rootScope.changeLanguage=function(){
+                if($scope.langKey=='zn'){
+                    $scope.langKey='en';
+                }else{
+                    $scope.langKey='zn';
+                }
+                $translate.use($scope.langKey);
+            };
+
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
         $rootScope.msg=[];
             if (typeof(toState) !== 'undefined'){
@@ -58,7 +70,6 @@ app.run( ['$rootScope', '$state', '$stateParams','cfpLoadingBar','util','route_u
 
 
         });
-
            util.http("my.json").success(function(res){
             $rootScope.menuItems=res.menu;
         })
@@ -125,6 +136,16 @@ app.config(['cfpLoadingBarProvider', function(cfpLoadingBarProvider) {
     cfpLoadingBarProvider.latencyThreshold = 500;  //时间
 
 }])
+app.config(['$translateProvider', function ($translateProvider) {
+
+    $translateProvider.useStaticFilesLoader({
+        prefix : 'frame/i18n/',
+        suffix : '.json'
+    });
+    $translateProvider.preferredLanguage('zn');
+
+
+}])
 //指令
 app.directive('sidebar',['$window',function($window){
     return {
@@ -188,8 +209,4 @@ app.animation('.main', function ($timeout) {
         }
 
     };
-});
-
-app.controller("MyCtrl", function($ocLazyLoad,loadMyCtrl) {
-    $ocLazyLoad.load('frame/app/js/test.js');
 });

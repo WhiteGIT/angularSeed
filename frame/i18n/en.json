@@ -1,0 +1,13 @@
+{
+  "topbar": {
+      "name": "Porject Manage",
+      "Lange": "中文"
+    },
+    "nav": {
+      "menu": {
+        "GYFF": "Public Method",
+        "CJGL": "Plugins",
+        "YSMB": "Style Templet"
+      }
+    }
+}

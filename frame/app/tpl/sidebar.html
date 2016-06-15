@@ -1,6 +1,7 @@
 <script type="text/ng-template" id="sidebar-renderer.html">
     <a  ng-href="{{$state.href(item.url)}}" href="#">
-        <em  class="glyphicon" ng-class="{'glyphicon-folder-close':item.icon,'glyphicon-file':!item.icon}" title="{{item.text}}"></em>{{item.text}}</a>
+        <em  class="glyphicon" ng-class="{'glyphicon-folder-close':item.icon,'glyphicon-file':!item.icon}" title="{{item.text}}"></em>
+        {{(item.translate | translate) || item.text}}</a>
     <ul ng-if="item.submenu"  class="nav nav-sidebar-item">
        <li ng-repeat="item in item.submenu"   ng-include="'sidebar-renderer.html'" ng-click="sidetoggle()" ></li>
     </ul>

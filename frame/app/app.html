@@ -7,19 +7,19 @@
             <span class="icon-bar"></span>
         </button>
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">项目前端管理--angularJS+ui-route+oclazyload</a>
+            <a class="navbar-brand" href="#">{{'topbar.name'|translate }}--angularJS+ui-route+oclazyload</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">LIN</a></li>
+                <li><a href="javascript:;" ng-click="changeLanguage()" translate="topbar.Lange" ></a></li>
             </ul>
-            <form class="navbar-form navbar-right" style="position: relative;">
+           <!-- <form class="navbar-form navbar-right" style="position: relative;">
                 <input type="text" ng-model="keyword2" class="form-control" placeholder="Search..." style="width: 300px;">
                 <div class="list-group" ng-if="keyword2" style="position: absolute;width: 300px;">
                     <a  ng-repeat="r in  route_url | filter:{controller:keyword2}" ng-click="itemClick();"  ng-href="{{$state.href(r.state)}}" class="list-group-item">{{r.controller}}</a>
                   </a>
                 </div>
-            </form>
+            </form>-->
         </div>
     </div>
 </nav>
