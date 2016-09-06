@@ -9,16 +9,13 @@ var express =require('express');
 var app= express();
 
 //托管的静态文件
-app.use(express.static(path.join(__dirname, 'app')));
+app.use(express.static(path.join(__dirname, '/build/app')));
 
 //端口
 app.set('port', process.env.PORT || 3000);
 
-
-
 app.get('/', function(req, res) {
-    console.log(__dirname);
-    res.sendfile('app/index.html');
+    res.sendfile(__dirname+'/build/app/index.html');
 });
 
 app.get('/getMenu', function(req, res) {

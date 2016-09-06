@@ -3,6 +3,6 @@
  */
 angular.module('seed',[[
     'bower_components/angular-ui-grid/ui-grid.js',
-    'bower_components/angular-ui-grid/ui-grid.css',]]).controller("oclazyload",function($scope){
+    'bower_components/angular-ui-grid/ui-grid.css',]]).controller("oclazyload",function(){
 
     })

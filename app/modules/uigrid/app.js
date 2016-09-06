@@ -4,7 +4,7 @@
 //test controller
 angular.module('seed',[[
     'bower_components/angular-ui-grid/ui-grid.js',
-    'bower_components/angular-ui-grid/ui-grid.css',]]).controller("uigrid",function($scope){
+    'bower_components/angular-ui-grid/ui-grid.css',]]).controller("uigrid",["$scope",function($scope){
     $scope.lazyData="I am lazyData";
     $scope.myData = [{name: "Moroni", age: 50},
         {name: "Teancum", age: 43},
@@ -21,5 +21,5 @@ angular.module('seed',[[
             }],
         data: 'myData'};
     $scope.gridOptions2 = {data: 'myData'};
-})
+}])
 

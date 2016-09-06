@@ -25,7 +25,7 @@ app.constant("route_url",[   //左边菜单
         controller:'uigrid'
     }
 ])
-app.run( ['$rootScope', '$state', '$stateParams','cfpLoadingBar','util','route_url','$timeout',
+app.run("$rootScope","$state","$stateParams","cfpLoadingBar","util","route_url","$timeout",
     function ($rootScope, $state, $stateParams, cfpLoadingBar,util,route_url,$timeout) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
@@ -61,7 +61,7 @@ app.run( ['$rootScope', '$state', '$stateParams','cfpLoadingBar','util','route_u
             $rootScope.menuItems=res.menu;
         })
 
-}])
+})
 //全局变量
 app.constant('test_data',
     {
@@ -101,7 +101,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider','$ocLazyL
     $stateProvider.state('app',{
             url:'/app',
             templateUrl:'frame/app/app.html',
-            controller : function($scope){
+            controller : ["$scope",function($scope){
                 $scope.$watch('keyword2',function(w,old){
                     console.log(w);
                     console.log(old);
@@ -110,7 +110,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider','$ocLazyL
                 $scope.itemClick=function(){
                     $scope.keyword2="";
                 }
-            }
+            }]
         })
    }]);
 //进度条配置
@@ -168,7 +168,7 @@ app.factory("util",['$http','cfpLoadingBar',function($http,cfpLoadingBar){
 
 }])
 //animation
-app.animation('.main', function ($timeout) {
+app.animation('.main',["$timeout",function ($timeout) {
     //主页面切换时候动画处理
     return{
         enter: function(element, done) {
@@ -184,5 +184,5 @@ app.animation('.main', function ($timeout) {
         }
 
     };
-});
+}]);
 
