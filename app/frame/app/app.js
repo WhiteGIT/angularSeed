@@ -25,8 +25,7 @@ app.constant("route_url",[   //左边菜单
         controller:'uigrid'
     }
 ])
-app.run("$rootScope","$state","$stateParams","cfpLoadingBar","util","route_url","$timeout",
-    function ($rootScope, $state, $stateParams, cfpLoadingBar,util,route_url,$timeout) {
+app.run(function ($rootScope, $state, $stateParams, cfpLoadingBar,util,route_url,$timeout) {
     $rootScope.$state = $state;
     $rootScope.$stateParams = $stateParams;
     $rootScope.route_url=route_url;
@@ -88,7 +87,6 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider','$ocLazyL
         $stateProvider
             .state(v.state,{
                 url: v.url,
-
                         controller: v.controller, // This view will use AppCtrl loaded below in the resolve
                         templateUrl: v.templateUrl,
                 resolve: { // Any property in resolve should return a promise and is executed before the view is loaded
