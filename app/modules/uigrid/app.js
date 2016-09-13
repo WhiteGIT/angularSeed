@@ -2,7 +2,9 @@
  * Created by Administrator on 2016/4/27.
  */
 //test controller
-angular.module('seed',[['bower_components/angular-ui-grid/ui-grid.js','bower_components/angular-ui-grid/ui-grid.css',]]).controller("uigrid",["$scope",function($scope){
+angular.module('seed',[[
+    __uri('../../bower_components/angular-ui-grid/ui-grid.js'),
+    __uri('../../bower_components/angular-ui-grid/ui-grid.css')]]).controller("uigrid",["$scope",function($scope){
     $scope.lazyData="I am lazyData";
     $scope.myData = [{name: "Moroni", age: 50},
         {name: "Teancum", age: 43},
@@ -17,7 +19,7 @@ angular.module('seed',[['bower_components/angular-ui-grid/ui-grid.js','bower_com
             {
                 name:'年龄',field:'age'
             }],
-        data: 'myData'};
-    $scope.gridOptions2 = {data: 'myData'};
+        data: $scope.myData};
+    $scope.gridOptions2 = {data: $scope.myData};
 }])
 
