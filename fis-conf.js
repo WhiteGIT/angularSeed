@@ -1,6 +1,6 @@
 // 配置按需编译：设置编译范围为 html 文件，不过 html 文件中使用到的资源也会参与编译。
 //fis.set('project.files', ['app/frame/**','app/modules/**']);
-fis.set('project.ignore', ['node_modules/**','fis-conf.js','app/bower_components/**',"package.json"]);
+fis.set('project.ignore', ['TEST','node_modules/**','fis-conf.js','app/bower_components/**',"package.json"]);
 //框架基本js css打包路径
 fis.set('frame','/static/base');
 
@@ -43,18 +43,19 @@ fis.match('*', {
 fis.match('*.css',{
     useHash:true
 })
-/*
-JS加了MD5后，需要先解决Oclazyload 文件加载不到
+
+//JS加了MD5后，需要先解决Oclazyload 文件加载不到
 fis.match('*.js',{
     useHash:true
-})*/
+})
 /**********************生产环境下CSS、JS压缩合并*****************/
 fis.media('prod')
     .match('**.js', {
         //angular注入依赖自动补上别名  需要开启模块化
         preprocessor: fis.plugin('annotate'),
         // fis-optimizer-uglify-js 插件进行压缩，已内置
-        optimizer: fis.plugin('uglify-js')})
+         optimizer: fis.plugin('uglify-js')
+        })
     .match('*.css', {
         // fis-optimizer-clean-css 插件进行压缩，已内置
         optimizer: fis.plugin('clean-css')})
@@ -67,4 +68,7 @@ fis.media('prod')
     .match("bower_components/**.css",{
         packTo:'app/static/com.css'
     })
-
+    //合并时候 angular放最前面
+    .match('angular.*', {
+        packOrder: -100
+    })
