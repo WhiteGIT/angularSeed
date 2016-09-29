@@ -22,7 +22,7 @@ app.constant("route_url",[   //左边菜单
         url:'/uigrid',
         templateUrl:'modules/uigrid/index.html',
         file:__uri('../../modules/uigrid/app.js'),    //依赖文件 可以单个路径，或者数组，或者定义好的字符串变量
-        controller:''
+        controller:'uigrid'
     }
 ])
 app.run(function ($rootScope, $state, $stateParams, cfpLoadingBar,util,route_url,$timeout) {
@@ -49,8 +49,7 @@ app.run(function ($rootScope, $state, $stateParams, cfpLoadingBar,util,route_url
         });
 
      $rootScope.$on('ocLazyLoad.componentLoaded', function(e, module) {
-
-            $timeout(function(){
+           $timeout(function(){
                 $rootScope.msg.push('loaded:['+module+']');
             })
 
@@ -61,17 +60,12 @@ app.run(function ($rootScope, $state, $stateParams, cfpLoadingBar,util,route_url
         })
 
 })
-//全局变量
-app.constant('test_data',
-    {
-        test:'HELLO WORLD'
-    })
 //路由配置  oclazyload配置
 app.config(['$stateProvider', '$urlRouterProvider','$locationProvider','$ocLazyLoadProvider','route_url',function($stateProvider, $urlRouterProvider, $locationProvider,$ocLazyLoadProvider,route_url){
     //$locationProvider.html5Mode(false);
 
     $ocLazyLoadProvider.config({
-         debug: true,  //打印加载的lazy模块
+         debug: false,  //打印加载的lazy模块
            events: true, //广播事件
         // modules: [{  //设置路径别名
         //    name: 'gridModule',

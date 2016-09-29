@@ -49,12 +49,12 @@ fis.match('*.js',{
     useHash:true
 })
 /**********************生产环境下CSS、JS压缩合并*****************/
-fis.media('prod')
+    fis.media('prod')
     .match('**.js', {
         //angular注入依赖自动补上别名  需要开启模块化
         preprocessor: fis.plugin('annotate'),
         // fis-optimizer-uglify-js 插件进行压缩，已内置
-         optimizer: fis.plugin('uglify-js')
+       //  optimizer: fis.plugin('uglify-js')
         })
     .match('*.css', {
         // fis-optimizer-clean-css 插件进行压缩，已内置

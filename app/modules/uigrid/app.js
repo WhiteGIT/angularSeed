@@ -5,21 +5,24 @@
 angular.module('seed',[[
     __uri('../../bower_components/angular-ui-grid/ui-grid.js'),
     __uri('../../bower_components/angular-ui-grid/ui-grid.css')]]).controller("uigrid",["$scope",function($scope){
-    $scope.lazyData="I am lazyData";
-    $scope.myData = [{name: "Moroni", age: 50},
-        {name: "Teancum", age: 43},
-        {name: "Jacob", age: 27},
-        {name: "Nephi", age: 29},
-        {name: "Enos", age: 34}];
+   var myData =  [{name: "Moroni", age: 50},
+       {name: "Teancum", age: 43},
+       {name: "Jacob", age: 27},
+       {name: "Nephi", age: 29},
+       {name: "Enos", age: 34}];
     $scope.gridOptions = {
         columnDefs: [
             {
-                name:'姓名',field:'name'
+                name:'姓名',field:'name',enableCellEdit: true
             },
             {
-                name:'年龄',field:'age'
+                name:'年龄',field:'age',enableCellEdit: true
+            },
+            {
+                name:'信息',field:'age'
             }],
-        data: $scope.myData};
-    $scope.gridOptions2 = {data: $scope.myData};
+        data: myData};
+    console.log($scope.gridOptions)
+
 }])
 
