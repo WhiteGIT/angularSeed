@@ -9,19 +9,19 @@ app.constant("route_url",[   //左边菜单
     {   state:'app.http',
         url:'/http',
         templateUrl:'modules/publicMethod/index.html',
-        file:__uri('../../modules/publicMethod/app.js'),    //依赖文件 可以单个路径，或者数组，或者定义好的字符串变量
+        file:__uri('../modules/publicMethod/app.js'),    //依赖文件 可以单个路径，或者数组，或者定义好的字符串变量
         controller:'publicMethod'
     },
     {   state:'app.oclazyload',
         url:'/oclazyload',
         templateUrl:'modules/oclazyload/index.html',
-        file:__uri('../../modules/oclazyload/app.js'),    //依赖文件 可以单个路径，或者数组，或者定义好的字符串变量
+        file:__uri('../modules/oclazyload/app.js'),    //依赖文件 可以单个路径，或者数组，或者定义好的字符串变量
         controller:'oclazyload'
     },
     {   state:'app.uigrid',
         url:'/uigrid',
         templateUrl:'modules/uigrid/index.html',
-        file:__uri('../../modules/uigrid/app.js'),    //依赖文件 可以单个路径，或者数组，或者定义好的字符串变量
+        file:__uri('../modules/uigrid/app.js'),    //依赖文件 可以单个路径，或者数组，或者定义好的字符串变量
         controller:'uigrid'
     }
 ])
@@ -92,7 +92,7 @@ app.config(['$stateProvider', '$urlRouterProvider','$locationProvider','$ocLazyL
          })
     $stateProvider.state('app',{
             url:'/app',
-            templateUrl:'frame/app/app.html',
+            templateUrl:'frame/app.html',
             controller : ["$scope",function($scope){
                 $scope.$watch('keyword2',function(w,old){
                     console.log(w);
